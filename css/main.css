@@ -1,0 +1,8 @@
+.toolbar.toolbar-header {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.txt-center {
+  text-align: center;
+}

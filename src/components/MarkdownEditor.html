@@ -1,0 +1,41 @@
+<textarea ref:editor on:keyup="changed()" name="markdown-input" id="markdown-input" class="markdown-input form-control">{{value}}</textarea>
+
+<script>
+  export default {
+    onrender() {
+      this.valueObserver = this.observe('value', (newValue, oldValue) => {
+        if(newValue !== oldValue) { this.set({value: newValue}); }
+      });
+    },
+
+    data() {
+      return {
+        value: ''
+      };
+    },
+
+    methods: {
+      changed() {
+        const value = this.refs.editor.value;
+        this.set({ value });
+        this.fire('changed', { value });
+      }
+    }
+
+  };
+</script>
+
+<style>
+  .markdown-input {
+    position: absolute;
+    border: none;
+    height: 100%;
+    resize: none;
+  }
+
+  .markdown-input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+</style>

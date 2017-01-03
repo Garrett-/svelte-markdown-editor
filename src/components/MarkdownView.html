@@ -1,0 +1,36 @@
+<div class="markdown-output" ref:view></div>
+
+<script>
+  export default {
+
+    onrender() {
+      this.htmlObserver = this.observe('html', html => {
+        if(html) {
+          this.refs.view.innerHTML = html;
+        }
+      });
+
+      const html = this.get('html');
+      if(html) {
+        this.refs.view.innerHTML = html;
+      }
+    },
+
+    onteardown() {
+      this.htmlObserver.cancel();
+    },
+
+    data() {
+      return {
+        html: ''
+      };
+    }
+
+  }
+</script>
+
+<style>
+.markdown-output {
+  padding: 1em;
+}
+</style>

@@ -1,0 +1,25 @@
+<footer class="toolbar toolbar-footer">
+  <div class="toolbar-actions">
+    {{#if saving}}
+      <button type="button" class="btn btn-default">Saving</button>
+    {{else}}
+      <button on:click="fire('save', {type: 'md'})" type="button" class="btn btn-primary">Save Markdown</button>
+    {{/if}}
+    
+    {{#if saving}}
+      <button type="button" class="btn btn-default pull-right">Saving</button>
+    {{else}}
+      <button on:click="fire('save', {type: 'html'})" type="button" class="btn btn-primary pull-right">Save HTML</button>
+    {{/if}}
+  </div>
+</footer>
+
+<script>
+  export default {
+    data() {
+      return {
+        saving: false
+      };
+    }
+  }
+</script>
