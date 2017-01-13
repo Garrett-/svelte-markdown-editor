@@ -1,20 +1,25 @@
 {
   "name": "markdown-editor",
   "version": "1.0.0",
-  "description": "Simple markdown editor",
+  "description": "markdown editor",
   "main": "app.js",
   "author": "Josh Messer",
-  "title": "Simple Markdown Editor",
+  "title": "Markdown Editor",
   "scripts": {
     "start": "electron .",
+    "build-styles": "gulp sass",
     "build-components": "svelte compile -f umd -i ../src/components/ -o ./components/",
     "start:build": "npm run build-components && npm run start"
   },
   "devDependencies": {
-    "electron": "^1.4.1",
     "babel-core": "^6.18.2",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-3": "^6.17.0",
+    "bulma": "^0.3.0",
+    "electron": "^1.4.1",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-shell": "^0.5.2",
     "rimraf": "^2.5.4",
     "rollup": "^0.36.4",
     "rollup-plugin-babel": "^2.6.1",

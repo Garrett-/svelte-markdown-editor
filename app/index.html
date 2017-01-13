@@ -4,7 +4,6 @@
     <title>Markdown Editor</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../css/photon.min.css">
     <link rel="stylesheet" href="../css/main.css">
 
     <!-- Javascript -->
@@ -12,29 +11,17 @@
 
   </head>
   <body>
-    <div class="window">
+    <div class="columns min-height">
+      <div class="column">
+        <!-- Markdown editor input -->
+        <div id="md-editor"></div>
+      </div>
+      <div class="column">
+        <!-- Markdown editor output -->
+        <div id="md-view"></div>
+      </div>
+    </div>
 
-      <div id="header"></div>
-
-      <!-- Your app's content goes inside .window-content -->
-      <div class="window-content">
-
-        <div class="pane-group">
-          <div class="pane">
-            <!-- Markdown editor input -->
-            <div class="form-group" id="md-editor"></div>
-          </div>
-
-          <div class="pane">
-            <!-- Markdown editor output -->
-            <div id="md-view"></div>
-          </div>
-        </div>
-
-      </div> <!-- .window-content -->
-
-      <div id="footer"></div>
-
-    </div> <!-- .window -->
+    <div id="footer"></div>
   </body>
 </html>
