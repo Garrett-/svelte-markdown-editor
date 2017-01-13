@@ -1,23 +1,29 @@
-<footer class="toolbar toolbar-footer">
-  <div class="toolbar-actions">
-    {{#if saving}}
-      <button type="button" class="btn btn-default">Saving</button>
-    {{else}}
-      <button on:click="fire('save', {type: 'md'})" type="button" class="btn btn-primary">Save Markdown</button>
-    {{/if}}
-    
-    {{#if saving}}
-      <button type="button" class="btn btn-default pull-right">Saving</button>
-    {{else}}
-      <button on:click="fire('save', {type: 'html'})" type="button" class="btn btn-primary pull-right">Save HTML</button>
-    {{/if}}
+<div class="columns">
+
+  <div class="column">
+    <button on:click="fire('save', {type: 'md'})" type="button" class="button is-primary {{savingClass}}">Save Markdown</button>
   </div>
-</footer>
+  <div class="column">
+    <button on:click="fire('save', {type: 'html'})" type="button" class="button is-primary is-pulled-right {{savingClass}}">Save HTML</button>
+  </div>
+
+</div>
 
 <script>
   export default {
+    onrender() {
+      this.savingObserver = this.observe('saving', saving => {
+        this.set({savingClass: saving?'is-loading':''});
+      });
+    },
+
+    onteardown() {
+      this.savingObserver.cancel();
+    },
+
     data() {
       return {
+        savingClass: '',
         saving: false
       };
     }

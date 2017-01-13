@@ -6,8 +6,19 @@
 
 var template = (function () {
   return {
+    onrender() {
+      this.savingObserver = this.observe('saving', saving => {
+        this.set({savingClass: saving?'is-loading':''});
+      });
+    },
+
+    onteardown() {
+      this.savingObserver.cancel();
+    },
+
     data() {
       return {
+        savingClass: '',
         saving: false
       };
     }
@@ -15,131 +26,14 @@ var template = (function () {
 }());
 
 function renderMainFragment ( root, component ) {
-	var footer = createElement( 'footer' );
-	footer.className = "toolbar toolbar-footer";
-	
 	var div = createElement( 'div' );
-	div.className = "toolbar-actions";
+	div.className = "columns";
 	
-	appendNode( div, footer );
-	var ifBlock_anchor = createComment( "#if saving" );
-	appendNode( ifBlock_anchor, div );
+	var div1 = createElement( 'div' );
+	div1.className = "column";
 	
-	function getBlock ( root ) {
-		if ( root.saving ) return renderIfBlock_0;
-		return renderIfBlock_1;
-	}
+	appendNode( div1, div );
 	
-	var currentBlock = getBlock( root );
-	var ifBlock = currentBlock && currentBlock( root, component );
-	
-	if ( ifBlock ) ifBlock.mount( ifBlock_anchor.parentNode, ifBlock_anchor );
-	appendNode( createText( "\n    \n    " ), div );
-	var ifBlock1_anchor = createComment( "#if saving" );
-	appendNode( ifBlock1_anchor, div );
-	
-	function getBlock1 ( root ) {
-		if ( root.saving ) return renderIfBlock1_0;
-		return renderIfBlock1_1;
-	}
-	
-	var currentBlock1 = getBlock1( root );
-	var ifBlock1 = currentBlock1 && currentBlock1( root, component );
-	
-	if ( ifBlock1 ) ifBlock1.mount( ifBlock1_anchor.parentNode, ifBlock1_anchor );
-
-	return {
-		mount: function ( target, anchor ) {
-			insertNode( footer, target, anchor );
-		},
-		
-		update: function ( changed, root ) {
-			var _currentBlock = currentBlock;
-			currentBlock = getBlock( root );
-			if ( _currentBlock === currentBlock && ifBlock) {
-				ifBlock.update( changed, root );
-			} else {
-				if ( ifBlock ) ifBlock.teardown( true );
-				ifBlock = currentBlock && currentBlock( root, component );
-				if ( ifBlock ) ifBlock.mount( ifBlock_anchor.parentNode, ifBlock_anchor );
-			}
-			
-			var _currentBlock1 = currentBlock1;
-			currentBlock1 = getBlock1( root );
-			if ( _currentBlock1 === currentBlock1 && ifBlock1) {
-				ifBlock1.update( changed, root );
-			} else {
-				if ( ifBlock1 ) ifBlock1.teardown( true );
-				ifBlock1 = currentBlock1 && currentBlock1( root, component );
-				if ( ifBlock1 ) ifBlock1.mount( ifBlock1_anchor.parentNode, ifBlock1_anchor );
-			}
-		},
-		
-		teardown: function ( detach ) {
-			if ( ifBlock ) ifBlock.teardown( false );
-			if ( ifBlock1 ) ifBlock1.teardown( false );
-			
-			if ( detach ) {
-				detachNode( footer );
-			}
-		},
-	};
-}
-
-function renderIfBlock1_1 ( root, component ) {
-	var button = createElement( 'button' );
-	
-	function clickHandler ( event ) {
-		component.fire('save', {type: 'html'});
-	}
-	
-	button.addEventListener( 'click', clickHandler, false );
-	
-	button.type = "button";
-	button.className = "btn btn-primary pull-right";
-	
-	appendNode( createText( "Save HTML" ), button );
-
-	return {
-		mount: function ( target, anchor ) {
-			insertNode( button, target, anchor );
-		},
-		
-		update: noop,
-		
-		teardown: function ( detach ) {
-			button.removeEventListener( 'click', clickHandler, false );
-			
-			if ( detach ) {
-				detachNode( button );
-			}
-		},
-	};
-}
-
-function renderIfBlock1_0 ( root, component ) {
-	var button = createElement( 'button' );
-	button.type = "button";
-	button.className = "btn btn-default pull-right";
-	
-	appendNode( createText( "Saving" ), button );
-
-	return {
-		mount: function ( target, anchor ) {
-			insertNode( button, target, anchor );
-		},
-		
-		update: noop,
-		
-		teardown: function ( detach ) {
-			if ( detach ) {
-				detachNode( button );
-			}
-		},
-	};
-}
-
-function renderIfBlock_1 ( root, component ) {
 	var button = createElement( 'button' );
 	
 	function clickHandler ( event ) {
@@ -149,44 +43,48 @@ function renderIfBlock_1 ( root, component ) {
 	button.addEventListener( 'click', clickHandler, false );
 	
 	button.type = "button";
-	button.className = "btn btn-primary";
+	button.className = "button is-primary " + ( root.savingClass );
 	
+	appendNode( button, div1 );
 	appendNode( createText( "Save Markdown" ), button );
+	appendNode( createText( "\n  " ), div );
+	
+	var div2 = createElement( 'div' );
+	div2.className = "column";
+	
+	appendNode( div2, div );
+	
+	var button1 = createElement( 'button' );
+	
+	function clickHandler1 ( event ) {
+		component.fire('save', {type: 'html'});
+	}
+	
+	button1.addEventListener( 'click', clickHandler1, false );
+	
+	button1.type = "button";
+	button1.className = "button is-primary is-pulled-right " + ( root.savingClass );
+	
+	appendNode( button1, div2 );
+	appendNode( createText( "Save HTML" ), button1 );
 
 	return {
 		mount: function ( target, anchor ) {
-			insertNode( button, target, anchor );
+			insertNode( div, target, anchor );
 		},
 		
-		update: noop,
+		update: function ( changed, root ) {
+			button.className = "button is-primary " + ( root.savingClass );
+			
+			button1.className = "button is-primary is-pulled-right " + ( root.savingClass );
+		},
 		
 		teardown: function ( detach ) {
 			button.removeEventListener( 'click', clickHandler, false );
+			button1.removeEventListener( 'click', clickHandler1, false );
 			
 			if ( detach ) {
-				detachNode( button );
-			}
-		},
-	};
-}
-
-function renderIfBlock_0 ( root, component ) {
-	var button = createElement( 'button' );
-	button.type = "button";
-	button.className = "btn btn-default";
-	
-	appendNode( createText( "Saving" ), button );
-
-	return {
-		mount: function ( target, anchor ) {
-			insertNode( button, target, anchor );
-		},
-		
-		update: noop,
-		
-		teardown: function ( detach ) {
-			if ( detach ) {
-				detachNode( button );
+				detachNode( div );
 			}
 		},
 	};
@@ -209,6 +107,12 @@ function Footer ( options ) {
 
 	this._fragment = renderMainFragment( this._state, this );
 	if ( options.target ) this._fragment.mount( options.target, null );
+	
+	if ( options._root ) {
+		options._root._renderHooks.push({ fn: template.onrender, context: this });
+	} else {
+		template.onrender.call( this );
+	}
 }
 
 Footer.prototype.get = function get( key ) {
@@ -266,6 +170,7 @@ Footer.prototype.set = function set ( newState ) {
 
 Footer.prototype.teardown = function teardown ( detach ) {
 	this.fire( 'teardown' );
+template.onteardown.call( this );
 
 	this._fragment.teardown( detach !== false );
 	this._fragment = null;
@@ -314,12 +219,6 @@ function appendNode( node, target ) {
 
 function createText( data ) {
 	return document.createTextNode( data );
-}
-
-function noop() {}
-
-function createComment( data ) {
-	return document.createComment( data );
 }
 
 return Footer;

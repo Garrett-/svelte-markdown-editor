@@ -8,7 +8,10 @@ var template = (function () {
   return {
     onrender() {
       this.valueObserver = this.observe('value', (newValue, oldValue) => {
-        if(newValue !== oldValue) { this.set({value: newValue}); }
+        if(newValue !== oldValue) {
+          this.set({value: newValue});
+          this.refs.editor.value = newValue;
+        }
       });
     },
 
@@ -32,7 +35,7 @@ var template = (function () {
 let addedCss = false;
 function addCss () {
 	var style = createElement( 'style' );
-	style.textContent = "\n  .markdown-input[svelte-3798181119], [svelte-3798181119] .markdown-input {\n    position: absolute;\n    border: none;\n    height: 100%;\n    resize: none;\n  }\n\n  .markdown-input[svelte-3798181119]:focus, [svelte-3798181119] .markdown-input:focus {\n    outline: none;\n    border: none;\n    box-shadow: none;\n  }\n";
+	style.textContent = "\n  .markdown-input[svelte-966191626], [svelte-966191626] .markdown-input {\n    position: absolute;\n    display: block;\n    border: 1px solid #ccc;\n    border-top: none;\n    border-left: none;\n    border-bottom-right-radius: 5px;\n    resize: none;\n    width: 50%;\n    height: calc(100% - 35px)\n  }\n\n  .markdown-input[svelte-966191626]:focus, [svelte-966191626] .markdown-input:focus {\n    outline: none;\n    box-shadow: none;\n  }\n";
 	appendNode( style, document.head );
 
 	addedCss = true;
@@ -40,7 +43,7 @@ function addCss () {
 
 function renderMainFragment ( root, component ) {
 	var textarea = createElement( 'textarea' );
-	textarea.setAttribute( 'svelte-3798181119', '' );
+	textarea.setAttribute( 'svelte-966191626', '' );
 	component.refs.editor = textarea;
 	
 	function keyupHandler ( event ) {
@@ -51,7 +54,7 @@ function renderMainFragment ( root, component ) {
 	
 	textarea.name = "markdown-input";
 	textarea.id = "markdown-input";
-	textarea.className = "markdown-input form-control";
+	textarea.className = "markdown-input";
 	
 	var text = createText( root.value );
 	appendNode( text, textarea );

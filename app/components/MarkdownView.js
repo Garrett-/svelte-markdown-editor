@@ -36,7 +36,7 @@ var template = (function () {
 let addedCss = false;
 function addCss () {
 	var style = createElement( 'style' );
-	style.textContent = "\n.markdown-output[svelte-3088501522], [svelte-3088501522] .markdown-output {\n  padding: 1em;\n}\n";
+	style.textContent = "\n  .markdown-output[svelte-521600278], [svelte-521600278] .markdown-output {\n    padding: 1em;\n  }\n\n  .markdown-output  h1[svelte-521600278], .markdown-output  [svelte-521600278] h1, .markdown-output[svelte-521600278]  h1, [svelte-521600278] .markdown-output  h1 { font-size: 200%; }\n  .markdown-output  h2[svelte-521600278], .markdown-output  [svelte-521600278] h2, .markdown-output[svelte-521600278]  h2, [svelte-521600278] .markdown-output  h2 { font-size: 180%; }\n  .markdown-output  h3[svelte-521600278], .markdown-output  [svelte-521600278] h3, .markdown-output[svelte-521600278]  h3, [svelte-521600278] .markdown-output  h3 { font-size: 160%; }\n  .markdown-output  h4[svelte-521600278], .markdown-output  [svelte-521600278] h4, .markdown-output[svelte-521600278]  h4, [svelte-521600278] .markdown-output  h4 { font-size: 140%; }\n  .markdown-output  h5[svelte-521600278], .markdown-output  [svelte-521600278] h5, .markdown-output[svelte-521600278]  h5, [svelte-521600278] .markdown-output  h5 { font-size: 120%; }\n  .markdown-output  h6[svelte-521600278], .markdown-output  [svelte-521600278] h6, .markdown-output[svelte-521600278]  h6, [svelte-521600278] .markdown-output  h6 { font-size: 115%; }\n  .markdown-output  ul[svelte-521600278], .markdown-output  [svelte-521600278] ul, .markdown-output[svelte-521600278]  ul, [svelte-521600278] .markdown-output  ul, ol[svelte-521600278], [svelte-521600278] ol { list-style: initial; }\n";
 	appendNode( style, document.head );
 
 	addedCss = true;
@@ -44,7 +44,7 @@ function addCss () {
 
 function renderMainFragment ( root, component ) {
 	var div = createElement( 'div' );
-	div.setAttribute( 'svelte-3088501522', '' );
+	div.setAttribute( 'svelte-521600278', '' );
 	div.className = "markdown-output";
 	component.refs.view = div;
 

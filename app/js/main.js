@@ -7,7 +7,6 @@ const {remote, ipcRenderer} = require('electron');
 
 // ///////////////////////////////
 // Svelte Components
-const TitleBar = rq('./components/TitleBar.js');
 const MarkdownEditor = rq('./components/MarkdownEditor.js');
 const MarkdownView = rq('./components/MarkdownView.js');
 const Footer = rq('./components/Footer.js');
@@ -17,19 +16,6 @@ const Footer = rq('./components/Footer.js');
  * the Svelte components
  */
 document.addEventListener('DOMContentLoaded', function () {
-
-  /**
-   * This component contains the title bar and toolbar
-   * as well as the window close, minimize, and maximize buttons
-   * @type {TitleBar}
-   */
-  var windowControls = new TitleBar({
-    target: document.getElementById('header'),
-    data: {
-      win: remote.getCurrentWindow(), // pass in the electron window object
-      title: pack.title
-    }
-  });
 
   /**
    * The Footer element contains the save buttons

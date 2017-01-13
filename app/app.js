@@ -16,21 +16,13 @@ app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 400,
-    frame: false
+    height: 400
   });
 
   // /////////////////////////////
   // Setup the application menu
   const menuTemplate = [
     {
-      label: app.getName(),
-      submenu: [
-        {
-          role: 'about'
-        }
-      ]
-    }, {
       label: 'File',
       submenu: [
         {
@@ -40,13 +32,21 @@ app.on('ready', function() {
           }
         }
       ]
+    }, {
+      label: 'Developers',
+      submenu: [
+        {
+          label: 'Open Dev Tools',
+          click() {
+            mainWindow.openDevTools();
+          }
+        }
+      ]
     }
   ];
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 
-  // show dev tools
-  mainWindow.openDevTools();
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
